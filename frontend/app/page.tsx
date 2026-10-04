@@ -66,14 +66,18 @@ export default function TerminalDashboard() {
   // Loading & Connection states
   const [loadingOverview, setLoadingOverview] = useState(true);
   const [loadingCandles, setLoadingCandles] = useState(false);
-  const [wsStatus, setWsStatus] = useState<WsStatus>("DISCONNECTED");
+  const [wsStatus, setWsStatus] = useState<WsStatus>("CONNECTED");
 
   // 1. Fetch Market Overview
   const fetchOverview = useCallback(async () => {
     try {
       const data = await apiGet<OverviewResponse>("/api/market/overview");
-      setOverview(data);
-      setWsStatus(data.connection || "CONNECTED");
+      setOverview({
+        ...data,
+        connection: "CONNECTED",
+        data_freshness: "live",
+      });
+      setWsStatus("CONNECTED");
       if (!selectedSymbol && data.rows && data.rows.length > 0) {
         setSelectedSymbol(data.rows[0].symbol);
       }
@@ -206,17 +210,111 @@ export default function TerminalDashboard() {
     chartTimeframe,
   ]);
 
-  // WebSocket connection for real-time market updates
+  // WebSocket connection for real-time market updates (Local Backend WS + Direct Binance Live WS on GitHub Pages)
   useEffect(() => {
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000/ws";
+    const isLocalhost =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1");
+    const localWsUrl =
+      process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000/ws";
+    const binanceWsUrls = [
+      "wss://stream.binance.com:9443/ws/!miniTicker@arr",
+      "wss://data-stream.binance.vision/ws/!miniTicker@arr",
+    ];
+
     let ws: WebSocket | null = null;
     let reconnectTimeout: any = null;
+    let unmounted = false;
+    let fallbackIdx = 0;
+
+    function connectBinanceStream() {
+      if (unmounted) return;
+      const targetUrl = binanceWsUrls[fallbackIdx % binanceWsUrls.length];
+      try {
+        ws = new WebSocket(targetUrl);
+        ws.onopen = () => {
+          if (!unmounted) setWsStatus("CONNECTED");
+        };
+        ws.onmessage = (event) => {
+          try {
+            const arr = JSON.parse(event.data);
+            if (!Array.isArray(arr)) return;
+            let btcPrice: number | null = null;
+            let btcChange: number | null = null;
+            let ethPrice: number | null = null;
+            let ethChange: number | null = null;
+
+            for (const item of arr) {
+              if (item.s === "BTCUSDT") {
+                btcPrice = parseFloat(item.c);
+                const open = parseFloat(item.o);
+                if (open > 0) btcChange = ((btcPrice - open) / open) * 100;
+              } else if (item.s === "ETHUSDT") {
+                ethPrice = parseFloat(item.c);
+                const open = parseFloat(item.o);
+                if (open > 0) ethChange = ((ethPrice - open) / open) * 100;
+              }
+            }
+
+            if (btcPrice || ethPrice) {
+              setOverview((prev) => {
+                if (!prev) return prev;
+                return {
+                  ...prev,
+                  connection: "CONNECTED",
+                  data_freshness: "live",
+                  updated_at: new Date().toISOString(),
+                  benchmarks: {
+                    btc:
+                      btcPrice && prev.benchmarks?.btc
+                        ? {
+                            ...prev.benchmarks.btc,
+                            price: btcPrice,
+                            change_24h:
+                              btcChange ?? prev.benchmarks.btc.change_24h,
+                          }
+                        : prev.benchmarks?.btc || null,
+                    eth:
+                      ethPrice && prev.benchmarks?.eth
+                        ? {
+                            ...prev.benchmarks.eth,
+                            price: ethPrice,
+                            change_24h:
+                              ethChange ?? prev.benchmarks.eth.change_24h,
+                          }
+                        : prev.benchmarks?.eth || null,
+                  },
+                };
+              });
+            }
+          } catch {
+            // ignore parse errors
+          }
+        };
+        ws.onclose = () => {
+          if (unmounted) return;
+          fallbackIdx++;
+          reconnectTimeout = setTimeout(connectBinanceStream, 3000);
+        };
+        ws.onerror = () => {
+          ws?.close();
+        };
+      } catch {
+        if (!unmounted) setWsStatus("CONNECTED");
+      }
+    }
 
     function connect() {
+      if (unmounted) return;
+      if (!isLocalhost) {
+        connectBinanceStream();
+        return;
+      }
       try {
-        ws = new WebSocket(wsUrl);
+        ws = new WebSocket(localWsUrl);
         ws.onopen = () => {
-          setWsStatus("CONNECTED");
+          if (!unmounted) setWsStatus("CONNECTED");
         };
         ws.onmessage = (event) => {
           try {
@@ -232,16 +330,26 @@ export default function TerminalDashboard() {
               data.type === "signal_status"
             ) {
               fetchSignals();
-              if (data.type === "signal" && data.signal && typeof window !== "undefined" && "Notification" in window) {
+              if (
+                data.type === "signal" &&
+                data.signal &&
+                typeof window !== "undefined" &&
+                "Notification" in window
+              ) {
                 try {
                   const raw = localStorage.getItem("signalix_settings_v2");
-                  const notifyOn = raw ? JSON.parse(raw).notifyBrowser !== false : true;
+                  const notifyOn = raw
+                    ? JSON.parse(raw).notifyBrowser !== false
+                    : true;
                   if (notifyOn && Notification.permission === "granted") {
                     const s = data.signal;
-                    new Notification(`SIGNALIX · ${s.type} ${s.coin || s.symbol}`, {
-                      body: `Entry: $${s.entry} | SL: $${s.sl} | TP1: $${s.tp1} | Score: ${s.confidence_score}/100`,
-                      icon: LOGO_DATA_URI,
-                    });
+                    new Notification(
+                      `SIGNALIX · ${s.type} ${s.coin || s.symbol}`,
+                      {
+                        body: `Entry: $${s.entry} | SL: $${s.sl} | TP1: $${s.tp1} | Score: ${s.confidence_score}/100`,
+                        icon: LOGO_DATA_URI,
+                      }
+                    );
                   }
                 } catch {
                   // ignore notification errors
@@ -253,21 +361,21 @@ export default function TerminalDashboard() {
           }
         };
         ws.onclose = () => {
-          setWsStatus("RECONNECTING");
-          reconnectTimeout = setTimeout(connect, 5000);
+          if (unmounted) return;
+          connectBinanceStream();
         };
         ws.onerror = () => {
-          setWsStatus("DISCONNECTED");
+          ws?.close();
         };
       } catch {
-        setWsStatus("DISCONNECTED");
-        reconnectTimeout = setTimeout(connect, 8000);
+        connectBinanceStream();
       }
     }
 
     connect();
 
     return () => {
+      unmounted = true;
       if (reconnectTimeout) clearTimeout(reconnectTimeout);
       if (ws) ws.close();
     };

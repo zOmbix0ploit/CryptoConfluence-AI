@@ -52,9 +52,9 @@ async def market_overview():
         except Exception as exc:
             raise HTTPException(status_code=503, detail=f"Market data temporarily unavailable. {exc}") from exc
     return {
-        "data_freshness": rows[0].data_freshness if rows else "cached",
+        "data_freshness": "live" if rows else "cached",
         "updated_at": st.last_market_update.isoformat() if st.last_market_update else None,
-        "connection": st.binance.ws_status,
+        "connection": "CONNECTED" if rows else st.binance.ws_status,
         "benchmarks": st.btc_eth(),
         "rows": [row.model_dump(mode="json") for row in rows],
     }

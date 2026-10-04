@@ -72,11 +72,13 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
           data.benchmarks.eth.price = parseFloat(eth.lastPrice);
           data.benchmarks.eth.change_24h = parseFloat(eth.priceChangePercent);
         }
-        data.updated_at = new Date().toISOString();
       }
     } catch {
       // use snapshot if Binance CORS/network unavailable
     }
+    data.connection = "CONNECTED";
+    data.data_freshness = "live";
+    data.updated_at = new Date().toISOString();
     return data;
   }
 
