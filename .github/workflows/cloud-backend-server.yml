@@ -1,0 +1,130 @@
+name: 24/7 Live Cloud FastAPI Backend Server (Auto-Hosted on GitHub)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "live-cloud-fastapi-server"
+  cancel-in-progress: false
+
+jobs:
+  cloud-fastapi-server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: ./backend/requirements.txt
+
+      - name: Install Python Backend Dependencies
+        working-directory: ./backend
+        run: pip install -r requirements.txt
+
+      - name: Install Cloudflare Tunnel (cloudflared)
+        run: |
+          curl -sL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared
+          chmod +x /usr/local/bin/cloudflared
+
+      - name: Start Live FastAPI Server & Publish Public Cloud URL
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_PNL_WEBHOOK_URL: ${{ secrets.DISCORD_PNL_WEBHOOK_URL }}
+          NOTIFY_DISCORD: ${{ secrets.NOTIFY_DISCORD }}
+          NOTIFY_DISCORD_PNL: ${{ secrets.NOTIFY_DISCORD_PNL }}
+        run: |
+          git config user.name "CryptoConfluence AI Cloud Server"
+          git config user.email "cloud@cryptoconfluence.ai"
+
+          # 1. Start live FastAPI uvicorn server in background
+          cd backend
+          nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/uvicorn.log 2>&1 &
+          UVICORN_PID=$!
+          cd ..
+
+          echo "Waiting for FastAPI server to boot..."
+          for i in $(seq 1 45); do
+            if curl -sf http://127.0.0.1:8000/health > /dev/null; then
+              echo "FastAPI server is ONLINE!"
+              break
+            fi
+            sleep 2
+          done
+
+          # 2. Start Cloudflare HTTPS tunnel
+          nohup cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8000 > /tmp/cloudflared.log 2>&1 &
+          CF_PID=$!
+
+          TUNNEL_URL=""
+          for i in $(seq 1 30); do
+            TUNNEL_URL=$(grep -oE 'https://[a-zA-Z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n 1 || true)
+            if [ -n "$TUNNEL_URL" ]; then
+              break
+            fi
+            sleep 2
+          done
+
+          echo "Live Cloud FastAPI URL: $TUNNEL_URL"
+          WS_URL=$(echo "$TUNNEL_URL" | sed 's|^https://|wss://|')/ws
+
+          # 3. Function to export live endpoints and push to main
+          sync_snapshots() {
+            git pull --rebase origin main || true
+            if [ -n "$TUNNEL_URL" ]; then
+              cat <<EOF > frontend/public/static-data/cloud_backend.json
+          {
+            "backend_url": "$TUNNEL_URL",
+            "ws_url": "$WS_URL",
+            "status": "ONLINE",
+            "updated_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }
+          EOF
+            fi
+            curl -sf http://127.0.0.1:8000/market/overview -o frontend/public/static-data/overview.json || true
+            curl -sf http://127.0.0.1:8000/signals -o frontend/public/static-data/signals.json || true
+            curl -sf http://127.0.0.1:8000/news -o frontend/public/static-data/news.json || true
+            curl -sf "http://127.0.0.1:8000/market/bubbles?timeframe=15m" -o frontend/public/static-data/bubbles_15m.json || true
+            curl -sf "http://127.0.0.1:8000/market/bubbles?timeframe=1h" -o frontend/public/static-data/bubbles_1h.json || true
+            curl -sf "http://127.0.0.1:8000/market/bubbles?timeframe=24h" -o frontend/public/static-data/bubbles_24h.json || true
+            curl -sf "http://127.0.0.1:8000/market/candles?symbol=BTCUSDT&interval=15m&limit=120" -o frontend/public/static-data/candles_BTCUSDT_15m.json || true
+            curl -sf http://127.0.0.1:8000/health -o frontend/public/static-data/health.json || true
+
+            git add frontend/public/static-data/*.json
+            if ! git diff --staged --quiet; then
+              git commit -m "chore(cloud): live cloud FastAPI server sync [skip ci]"
+              git push origin HEAD:main || true
+            fi
+          }
+
+          # Initial sync immediately after boot
+          curl -sf -X POST http://127.0.0.1:8000/signals/scan > /dev/null || true
+          sync_snapshots
+
+          # 4. Keep server alive and sync every 10 minutes for 5 hours
+          for cycle in $(seq 1 30); do
+            sleep 600
+            if ! kill -0 $UVICORN_PID 2>/dev/null; then
+              echo "Restarting uvicorn..."
+              cd backend
+              nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/uvicorn.log 2>&1 &
+              UVICORN_PID=$!
+              cd ..
+              sleep 5
+            fi
+            sync_snapshots
+          done

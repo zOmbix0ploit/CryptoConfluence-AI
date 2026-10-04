@@ -247,6 +247,39 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
   throw new Error(`Endpoint not available: ${path}`);
 }
 
+let cachedCloudUrl: string | null = null;
+let cachedCloudUrlAt = 0;
+
+export async function getCloudBackendUrl(): Promise<string | null> {
+  if (Date.now() - cachedCloudUrlAt < 45000) {
+    return cachedCloudUrl;
+  }
+  cachedCloudUrlAt = Date.now();
+  try {
+    const res = await fetch(
+      `${GITHUB_RAW_BASE}/cloud_backend.json?t=${Math.floor(
+        Date.now() / 30000
+      )}`,
+      { cache: "no-store" }
+    );
+    if (res.ok) {
+      const info = await res.json();
+      if (
+        info?.backend_url &&
+        typeof info.backend_url === "string" &&
+        info.backend_url.startsWith("https://")
+      ) {
+        cachedCloudUrl = info.backend_url.replace(/\/$/, "");
+        return cachedCloudUrl;
+      }
+    }
+  } catch {
+    // ignore
+  }
+  cachedCloudUrl = null;
+  return null;
+}
+
 export async function apiGet<T>(path: string): Promise<T> {
   if (!BASE_PATH) {
     try {
@@ -255,7 +288,20 @@ export async function apiGet<T>(path: string): Promise<T> {
         return (await response.json()) as T;
       }
     } catch {
-      // fall through to static/live Binance fallback
+      // fall through
+    }
+  }
+  const cloudUrl = await getCloudBackendUrl();
+  if (cloudUrl) {
+    try {
+      const response = await fetch(`${cloudUrl}${path}`, {
+        cache: "no-store",
+      });
+      if (response.ok) {
+        return (await response.json()) as T;
+      }
+    } catch {
+      // fall through to GitHub live static + Binance fallback
     }
   }
   return (await fetchStaticWithLiveBinance(path)) as T;
@@ -291,6 +337,23 @@ export async function apiPost<T>(path: string, body?: any): Promise<T> {
       ) {
         throw err;
       }
+    }
+  }
+
+  const cloudUrl = await getCloudBackendUrl();
+  if (cloudUrl && path !== "/api/settings/test" && path !== "/api/signals/discord-pnl-report") {
+    try {
+      const response = await fetch(`${cloudUrl}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+        cache: "no-store",
+      });
+      if (response.ok) {
+        return (await response.json()) as T;
+      }
+    } catch {
+      // fall through to browser fallback
     }
   }
 

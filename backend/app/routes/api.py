@@ -95,7 +95,7 @@ async def market_bubbles(timeframe: str = Query("24h", pattern="^(15m|1h|24h)$")
 
 @router.get("/market/candles")
 async def market_candles(
-    symbol: str = Query(..., min_length=5, max_length=20),
+    symbol: str = Query("BTCUSDT", min_length=3, max_length=20),
     interval: str = Query("15m", pattern="^(15m|1h|4h|1d)$"),
     limit: int = Query(120, ge=50, le=500),
 ):
@@ -123,6 +123,15 @@ async def market_candles(
     }
 
 
+@router.get("/market/candles/{symbol}")
+async def market_candles_by_symbol(
+    symbol: str,
+    interval: str = Query("15m", pattern="^(15m|1h|4h|1d)$"),
+    limit: int = Query(120, ge=50, le=500),
+):
+    return await market_candles(symbol=symbol, interval=interval, limit=limit)
+
+
 @router.get("/news")
 async def news(symbol: str | None = None):
     st = get_state()
@@ -140,6 +149,11 @@ async def news(symbol: str | None = None):
         "error": st.news.last_error,
         "count": len(unique_cards),
     }
+
+
+@router.get("/news/{symbol}")
+async def news_by_symbol(symbol: str):
+    return await news(symbol=symbol)
 
 
 @router.get("/technicals")
