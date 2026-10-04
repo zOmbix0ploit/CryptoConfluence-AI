@@ -4,14 +4,46 @@ const BASE_PATH =
     ? "/CryptoConfluence-AI"
     : "";
 
+const GITHUB_RAW_BASE =
+  "https://raw.githubusercontent.com/zOmbix0ploit/CryptoConfluence-AI/main/frontend/public/static-data";
+
+async function fetchLiveStaticJson(filename: string): Promise<any> {
+  try {
+    const res = await fetch(
+      `${GITHUB_RAW_BASE}/${filename}?t=${Math.floor(Date.now() / 15000)}`,
+      { cache: "no-store" }
+    );
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {
+    // fall back to bundled static-data
+  }
+  const res = await fetch(`${BASE_PATH}/static-data/${filename}`);
+  return res.json();
+}
+
+async function fetchBinanceJson(path: string): Promise<any> {
+  for (const host of [
+    "https://api.binance.com",
+    "https://data-api.binance.vision",
+  ]) {
+    try {
+      const r = await fetch(`${host}${path}`);
+      if (r.ok) return await r.json();
+    } catch {
+      continue;
+    }
+  }
+  return null;
+}
+
 async function fetchStaticWithLiveBinance(path: string): Promise<any> {
   if (path.startsWith("/api/market/overview")) {
-    const res = await fetch(`${BASE_PATH}/static-data/overview.json`);
-    const data = await res.json();
+    const data = await fetchLiveStaticJson("overview.json");
     try {
-      const binanceRes = await fetch("https://api.binance.com/api/v3/ticker/24hr");
-      if (binanceRes.ok) {
-        const tickers: any[] = await binanceRes.json();
+      const tickers: any[] | null = await fetchBinanceJson("/api/v3/ticker/24hr");
+      if (Array.isArray(tickers)) {
         const map = new Map(tickers.map((t) => [t.symbol, t]));
         if (Array.isArray(data.rows)) {
           data.rows = data.rows.map((r: any) => {
@@ -49,13 +81,11 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
   }
 
   if (path.startsWith("/api/signals")) {
-    const res = await fetch(`${BASE_PATH}/static-data/signals.json`);
-    return res.json();
+    return fetchLiveStaticJson("signals.json");
   }
 
   if (path.startsWith("/api/news")) {
-    const res = await fetch(`${BASE_PATH}/static-data/news.json`);
-    const data = await res.json();
+    const data = await fetchLiveStaticJson("news.json");
     const parts = path.split("?")[0].split("/");
     const sym = parts.length > 3 ? parts[3] : null;
     if (sym && sym !== "news" && Array.isArray(data.items)) {
@@ -77,8 +107,7 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
       : path.includes("timeframe=1h")
       ? "1h"
       : "24h";
-    const res = await fetch(`${BASE_PATH}/static-data/bubbles_${tf}.json`);
-    return res.json();
+    return fetchLiveStaticJson(`bubbles_${tf}.json`);
   }
 
   if (path.startsWith("/api/market/candles")) {

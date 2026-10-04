@@ -48,6 +48,16 @@ class BinanceService:
     )
     async def _get(self, path: str, params: dict[str, Any] | None = None) -> Any:
         response = await self._client.get(path, params=params)
+        if response.status_code in (451, 403):
+            fallback_url = "https://data-api.binance.vision"
+            logger.info("binance_switching_to_vision_endpoint", status=response.status_code, fallback=fallback_url)
+            await self._client.aclose()
+            self._client = httpx.AsyncClient(
+                base_url=fallback_url,
+                timeout=httpx.Timeout(15.0, connect=8.0),
+                headers={"User-Agent": "CryptoConfluenceAI/1.0"},
+            )
+            response = await self._client.get(path, params=params)
         if response.status_code == 429:
             retry_after = float(response.headers.get("Retry-After", "2"))
             logger.warning("binance_rate_limited", retry_after=retry_after)

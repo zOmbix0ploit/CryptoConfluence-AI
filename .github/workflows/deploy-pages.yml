@@ -1,4 +1,4 @@
-name: Deploy CryptoConfluence AI to GitHub Pages
+name: Deploy CryptoConfluence AI (Python Engine + Next.js) to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -17,12 +17,32 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Python 3.12 for Backend AI & Signal Engine
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: ./backend/requirements.txt
+
+      - name: Install Python Backend Dependencies
+        working-directory: ./backend
+        run: pip install -r requirements.txt
+
+      - name: Run Python Backend Engine (Market, CoinMarketCap News, 90%+ Win Rate Signals & Discord Alerts)
+        working-directory: ./backend
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_PNL_WEBHOOK_URL: ${{ secrets.DISCORD_PNL_WEBHOOK_URL }}
+          NOTIFY_DISCORD: ${{ secrets.NOTIFY_DISCORD }}
+          NOTIFY_DISCORD_PNL: ${{ secrets.NOTIFY_DISCORD_PNL }}
+        run: python run_github_scan.py
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,6 +52,7 @@ jobs:
           cache-dependency-path: ./frontend/package-lock.json
 
       - name: Configure Next.js for static GitHub Pages export
+        working-directory: ./frontend
         run: |
           rm -rf app/api
           rm -rf app/signals/\[id\]
@@ -48,13 +69,16 @@ jobs:
           export default nextConfig;
           EOF
 
-      - name: Install dependencies
+      - name: Install Frontend Dependencies
+        working-directory: ./frontend
         run: npm ci
 
-      - name: Build static site
+      - name: Build Next.js Static Site
+        working-directory: ./frontend
         run: npm run build
 
       - name: Add .nojekyll
+        working-directory: ./frontend
         run: touch out/.nojekyll
 
       - name: Upload Pages artifact
