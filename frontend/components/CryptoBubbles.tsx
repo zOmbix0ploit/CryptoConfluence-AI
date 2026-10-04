@@ -64,39 +64,39 @@ export function CryptoBubbles({
   };
 
   return (
-    <div className="terminal-panel p-4 flex flex-col h-full overflow-hidden">
+    <div className="terminal-panel p-3 sm:p-4 flex flex-col h-full overflow-hidden">
       {/* Top Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200/70 shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2.5 sm:pb-3 border-b border-slate-200/70 shrink-0">
         <div className="flex items-center gap-2">
-          <span className="text-xs uppercase tracking-wider font-bold text-slate-800">
+          <span className="text-[11px] sm:text-xs uppercase tracking-wider font-bold text-slate-800">
             Market Heatmap Bubbles
           </span>
-          <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/80">
+          <span className="text-[9px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/80">
             {filtered.length} Assets
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
           {/* Search */}
-          <div className="relative">
+          <div className="relative flex-1 sm:flex-initial">
             <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search coin..."
-              className="bg-white/80 border border-slate-200/90 rounded-lg pl-8 pr-3 py-1 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500/60 shadow-2xs w-28 md:w-36 transition-all"
+              className="bg-white/80 border border-slate-200/90 rounded-lg pl-8 pr-2.5 py-1 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500/60 shadow-2xs w-full sm:w-32 md:w-36 transition-all"
             />
           </div>
 
           {/* Timeframe Selector */}
-          <div className="flex items-center bg-slate-100/80 rounded-lg p-0.5 border border-slate-200/80 text-xs font-mono">
+          <div className="flex items-center bg-slate-100/80 rounded-lg p-0.5 border border-slate-200/80 text-xs font-mono shrink-0">
             {(["15m", "1h", "24h"] as const).map((tf) => (
               <button
                 key={tf}
                 type="button"
                 onClick={() => onTimeframeChange(tf)}
-                className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                className={`px-2 sm:px-2.5 py-1 rounded-md transition-all cursor-pointer ${
                   selectedTimeframe === tf
                     ? "bg-white text-indigo-600 font-semibold shadow-2xs border border-slate-200/60"
                     : "text-slate-500 hover:text-slate-800"
@@ -110,7 +110,7 @@ export function CryptoBubbles({
       </div>
 
       {/* Bubble Container Area */}
-      <div className="relative flex-1 overflow-y-auto scrollbar-thin p-3 min-h-[220px]">
+      <div className="relative flex-1 overflow-y-auto scrollbar-thin p-2 sm:p-3 min-h-[190px]">
         {isLoading && bubbles.length === 0 ? (
           <div className="h-full flex items-center justify-center text-slate-400 text-xs font-mono">
             Loading Binance market bubbles...

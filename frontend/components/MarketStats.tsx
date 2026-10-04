@@ -81,23 +81,23 @@ export function MarketStats({ rows, signals }: MarketStatsProps) {
   const isNetProfit = stats.totalPnlPct >= 0;
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
       {/* 24h Volume */}
-      <div className="terminal-panel relative overflow-hidden px-4 py-3 flex items-center justify-between">
+      <div className="terminal-panel relative overflow-hidden px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between">
         <div className="pointer-events-none absolute inset-x-5 top-0 h-[2.5px] rounded-b-full bg-gradient-to-r from-blue-500 to-indigo-500" />
-        <div>
-          <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-semibold">
+        <div className="min-w-0">
+          <div className="text-[9px] sm:text-[10px] uppercase font-mono tracking-wider text-slate-500 font-semibold truncate">
             24h Volume
           </div>
-          <div className="font-mono text-lg font-extrabold text-slate-900 mt-0.5">
+          <div className="font-mono text-sm sm:text-lg font-extrabold text-slate-900 mt-0.5 truncate">
             ${formatVolume(stats.totalVolume)}
           </div>
-          <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+          <div className="text-[9px] sm:text-[10px] font-mono text-slate-400 mt-0.5 truncate">
             {rows.length} USDT Spot Pairs
           </div>
         </div>
-        <div className="p-2.5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 text-indigo-600 border border-indigo-100 shadow-2xs">
-          <BarChart3 className="w-4 h-4" />
+        <div className="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 text-indigo-600 border border-indigo-100 shadow-2xs shrink-0">
+          <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
       </div>
 

@@ -497,7 +497,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen text-slate-900 p-3 md:p-5 gap-4">
+    <div className="flex flex-col min-h-screen text-slate-900 p-2.5 sm:p-3 md:p-5 pb-20 md:pb-5 gap-3.5 sm:gap-4">
       {/* Header */}
       <Header
         btc={overview?.benchmarks?.btc || null}
@@ -509,53 +509,53 @@ export default function SettingsPage() {
 
       <div className="max-w-4xl mx-auto w-full space-y-4">
         {/* Title & Save Action Bar */}
-        <div className="terminal-panel p-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="terminal-panel p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-lg md:text-xl font-extrabold text-slate-900 flex items-center gap-2">
-              <Sliders className="w-5 h-5 text-indigo-600" />
-              Terminal Settings, Webhooks &amp; Risk Engine
+            <h1 className="text-base sm:text-lg md:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+              <Sliders className="w-5 h-5 text-indigo-600 shrink-0" />
+              <span>Terminal Settings, Webhooks &amp; Risk Engine</span>
             </h1>
-            <p className="text-xs text-slate-500 mt-0.5 font-mono">
+            <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 font-mono">
               Configure real-time Discord/Telegram webhooks, risk boundaries, and confluence scoring weights.
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={handleScanSignalsNow}
               disabled={scanningSignals}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 shadow-2xs transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 shadow-2xs transition-all cursor-pointer disabled:opacity-50"
             >
               <RefreshCw
-                className={`w-3.5 h-3.5 text-indigo-600 ${
+                className={`w-3.5 h-3.5 text-indigo-600 shrink-0 ${
                   scanningSignals ? "animate-spin" : ""
                 }`}
               />
-              <span>{scanningSignals ? "Scanning..." : "Scan Signals Now"}</span>
+              <span>{scanningSignals ? "Scanning..." : "Scan Signals"}</span>
             </button>
 
             <button
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-sm ${
+              className={`flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-sm ${
                 saved
                   ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                   : "bg-slate-900 hover:bg-indigo-600 text-white shadow-slate-900/15"
               }`}
             >
               {saved ? (
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               ) : (
-                <Save className="w-4 h-4" />
+                <Save className="w-4 h-4 shrink-0" />
               )}
               <span>
                 {saving
                   ? "Saving..."
                   : saved
                   ? "Settings Saved!"
-                  : "Save All Changes"}
+                  : "Save Changes"}
               </span>
             </button>
           </div>

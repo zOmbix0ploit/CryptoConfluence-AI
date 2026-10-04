@@ -114,7 +114,7 @@ export default function NewsPage() {
   }, [news]);
 
   return (
-    <div className="flex flex-col min-h-screen text-slate-900 p-3 md:p-5 gap-4">
+    <div className="flex flex-col min-h-screen text-slate-900 p-2.5 sm:p-3 md:p-5 pb-20 md:pb-5 gap-3.5 sm:gap-4">
       {/* Header */}
       <Header
         btc={overview?.benchmarks?.btc || null}
@@ -125,13 +125,13 @@ export default function NewsPage() {
       />
 
       {/* Top Sentiment Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <div className="terminal-panel p-3.5 flex items-center justify-between">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-2.5 sm:gap-3">
+        <div className="terminal-panel p-3 sm:p-3.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-medium">
               Total Ingested
             </div>
-            <div className="font-mono text-xl font-bold text-slate-900 mt-0.5">
+            <div className="font-mono text-lg sm:text-xl font-bold text-slate-900 mt-0.5">
               {metrics.total}
             </div>
           </div>
@@ -140,12 +140,12 @@ export default function NewsPage() {
           </div>
         </div>
 
-        <div className="terminal-panel p-3.5 flex items-center justify-between">
+        <div className="terminal-panel p-3 sm:p-3.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-medium">
               Bullish Signals
             </div>
-            <div className="font-mono text-xl font-bold text-emerald-600 mt-0.5">
+            <div className="font-mono text-lg sm:text-xl font-bold text-emerald-600 mt-0.5">
               {metrics.bullish}
             </div>
           </div>
@@ -154,12 +154,12 @@ export default function NewsPage() {
           </div>
         </div>
 
-        <div className="terminal-panel p-3.5 flex items-center justify-between">
+        <div className="terminal-panel p-3 sm:p-3.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-medium">
               Bearish Signals
             </div>
-            <div className="font-mono text-xl font-bold text-rose-600 mt-0.5">
+            <div className="font-mono text-lg sm:text-xl font-bold text-rose-600 mt-0.5">
               {metrics.bearish}
             </div>
           </div>
@@ -168,12 +168,12 @@ export default function NewsPage() {
           </div>
         </div>
 
-        <div className="terminal-panel p-3.5 flex items-center justify-between">
+        <div className="terminal-panel p-3 sm:p-3.5 flex items-center justify-between">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-medium">
               High Impact
             </div>
-            <div className="font-mono text-xl font-bold text-amber-600 mt-0.5">
+            <div className="font-mono text-lg sm:text-xl font-bold text-amber-600 mt-0.5">
               {metrics.highImpact}
             </div>
           </div>
@@ -182,12 +182,12 @@ export default function NewsPage() {
           </div>
         </div>
 
-        <div className="terminal-panel p-3.5 flex items-center justify-between">
+        <div className="terminal-panel p-3 sm:p-3.5 flex items-center justify-between col-span-2 md:col-span-1">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-medium">
               Avg LLM Sentiment
             </div>
-            <div className="font-mono text-xl font-bold text-indigo-600 mt-0.5">
+            <div className="font-mono text-lg sm:text-xl font-bold text-indigo-600 mt-0.5">
               {metrics.avgScore} <span className="text-xs text-slate-400 font-normal">/ 1.0</span>
             </div>
           </div>
@@ -198,8 +198,8 @@ export default function NewsPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="terminal-panel p-3.5 flex flex-wrap items-center justify-between gap-3">
-        <div className="relative flex-1 min-w-[200px] max-w-sm">
+      <div className="terminal-panel p-3 sm:p-3.5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+        <div className="relative flex-1 min-w-[180px] max-w-sm">
           <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
@@ -210,15 +210,15 @@ export default function NewsPage() {
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           {/* Sentiment */}
-          <div className="flex items-center bg-slate-100/80 rounded-lg p-0.5 border border-slate-200/80 text-xs font-mono">
+          <div className="flex items-center bg-slate-100/80 rounded-lg p-0.5 border border-slate-200/80 text-xs font-mono overflow-x-auto max-w-full">
             {(["ALL", "BULLISH", "BEARISH", "NEUTRAL"] as const).map((s) => (
               <button
                 key={s}
                 type="button"
                 onClick={() => setSentimentFilter(s)}
-                className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                className={`px-2 sm:px-2.5 py-1 rounded-md transition-all cursor-pointer shrink-0 ${
                   sentimentFilter === s
                     ? s === "BULLISH"
                       ? "bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 shadow-2xs"

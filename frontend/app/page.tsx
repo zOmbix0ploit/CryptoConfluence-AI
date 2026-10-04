@@ -344,7 +344,7 @@ export default function TerminalDashboard() {
   }, [signals]);
 
   return (
-    <div className="flex flex-col min-h-screen text-slate-900 p-3 md:p-5 gap-3.5">
+    <div className="flex flex-col min-h-screen text-slate-900 p-2.5 sm:p-3 md:p-5 pb-20 md:pb-5 gap-3 sm:gap-3.5">
       {/* 1. Master Header */}
       <Header
         btc={overview?.benchmarks?.btc || null}
@@ -359,8 +359,8 @@ export default function TerminalDashboard() {
 
       {/* 3. Main 3-Column Terminal Layout */}
       <main className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 flex-1 items-stretch">
-        {/* Left Column: AI News Radar (Col 1-3) */}
-        <section className="lg:col-span-3 flex flex-col h-[650px] lg:h-[820px]">
+        {/* Left Column: AI News Radar (Col 1-3 on desktop, 3rd on mobile) */}
+        <section className="order-3 lg:order-1 lg:col-span-3 flex flex-col h-[520px] sm:h-[600px] lg:h-[820px]">
           <NewsRadar
             news={news}
             selectedTicker={filterTicker}
@@ -372,10 +372,10 @@ export default function TerminalDashboard() {
           />
         </section>
 
-        {/* Center Column: Bubbles (Top) + TradingView Chart (Bottom) (Col 4-8) */}
-        <section className="lg:col-span-5 flex flex-col gap-3.5 h-[900px] lg:h-[820px]">
+        {/* Center Column: Bubbles (Top) + TradingView Chart (Bottom) (Col 4-8 on desktop, 1st on mobile) */}
+        <section className="order-1 lg:order-2 lg:col-span-5 flex flex-col gap-3.5 h-auto lg:h-[820px]">
           {/* Top Half: Crypto Bubbles Heatmap */}
-          <div className="h-[340px] shrink-0">
+          <div className="h-[280px] sm:h-[340px] shrink-0">
             <CryptoBubbles
               bubbles={bubbles}
               selectedTimeframe={bubbleTimeframe}
@@ -387,7 +387,7 @@ export default function TerminalDashboard() {
           </div>
 
           {/* Bottom Half: TradingView Lightweight Candlestick Chart */}
-          <div className="flex-1 min-h-[360px]">
+          <div className="h-[380px] sm:h-[420px] lg:h-auto lg:flex-1 min-h-[340px]">
             <TradingChart
               symbol={selectedSymbol}
               candles={candles}
@@ -401,8 +401,8 @@ export default function TerminalDashboard() {
           </div>
         </section>
 
-        {/* Right Column: Algorithmic Confluence Signal Radar (Col 9-12) */}
-        <section className="lg:col-span-4 flex flex-col h-[650px] lg:h-[820px] terminal-panel p-4 overflow-hidden">
+        {/* Right Column: Algorithmic Confluence Signal Radar (Col 9-12 on desktop, 2nd on mobile) */}
+        <section className="order-2 lg:order-3 lg:col-span-4 flex flex-col h-[580px] sm:h-[650px] lg:h-[820px] terminal-panel p-3 sm:p-4 overflow-hidden">
           {/* Signals Panel Header */}
           <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-200/70 shrink-0">
             <div className="flex items-center gap-2">
