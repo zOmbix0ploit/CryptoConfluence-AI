@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { SignalCard } from "@/components/SignalCard";
+import { CoinIcon } from "@/components/CoinIcon";
 import type {
   GeneratedSignal,
   OverviewResponse,
@@ -741,7 +742,12 @@ export default function SignalsPage() {
                           }`}
                         >
                           <td className="py-2.5 px-3.5 font-bold text-slate-900">
-                            <div className="flex items-center gap-1.5">
+                            <div className="flex items-center gap-2">
+                              <CoinIcon
+                                symbol={sig.symbol || sig.coin}
+                                size={18}
+                                className="ring-1 ring-slate-200/80"
+                              />
                               <span>{sig.coin}</span>
                               <span className="text-[10px] font-normal px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 border border-slate-200">
                                 {sig.timeframe}

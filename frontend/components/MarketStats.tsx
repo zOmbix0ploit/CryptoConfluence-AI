@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import Link from "next/link";
 import type { MarketRow, GeneratedSignal } from "@/types";
 import { formatVolume, formatPct } from "@/lib/utils";
+import { CoinIcon } from "@/components/CoinIcon";
 import {
   TrendingUp,
   Activity,
@@ -178,8 +179,15 @@ export function MarketStats({ rows, signals }: MarketStatsProps) {
           <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 font-semibold">
             Top Gainer (24h)
           </div>
-          <div className="font-mono text-sm font-extrabold truncate mt-0.5 text-slate-900">
-            {stats.topGainer ? stats.topGainer.display_symbol : "—"}
+          <div className="font-mono text-sm font-extrabold truncate mt-0.5 text-slate-900 flex items-center gap-1.5">
+            {stats.topGainer && (
+              <CoinIcon
+                symbol={stats.topGainer.symbol}
+                size={16}
+                className="ring-1 ring-slate-200/80"
+              />
+            )}
+            <span>{stats.topGainer ? stats.topGainer.display_symbol : "—"}</span>
           </div>
           <div className="font-mono text-xs font-bold text-emerald-600 mt-0.5">
             {stats.topGainer ? formatPct(stats.topGainer.price_change_24h) : "—"}

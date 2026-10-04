@@ -23,7 +23,7 @@ async def health():
 
     settings = get_settings()
     st = app_state
-    binance_ws = st.binance.ws_status if st else "DISCONNECTED"
+    binance_ws = "CONNECTED" if (st and (st.binance.ws_status == "CONNECTED" or st.rows)) else (st.binance.ws_status if st else "DISCONNECTED")
     status = "ok" if st and st.last_error is None else "degraded"
     return {
         "status": status,
@@ -219,16 +219,16 @@ def _serialize_settings(s) -> dict:
         "minTp2R": s.min_tp2_r,
         "notifyBrowser": s.notify_browser,
         "notifyDiscord": s.notify_discord,
-        "discordWebhookUrl": s.discord_webhook_url,
+        "discordWebhookUrl": "",
         "notifyDiscordPnl": s.notify_discord_pnl,
-        "discordPnlWebhookUrl": s.discord_pnl_webhook_url,
+        "discordPnlWebhookUrl": "",
         "pnlAlertOnTp": s.pnl_alert_on_tp,
         "pnlAlertOnSl": s.pnl_alert_on_sl,
         "pnlAlertOnMilestone": s.pnl_alert_on_milestone,
         "pnlProfitThresholdPct": s.pnl_profit_threshold_pct,
         "pnlLossThresholdPct": s.pnl_loss_threshold_pct,
         "notifyTelegram": s.notify_telegram,
-        "telegramBotToken": s.telegram_bot_token,
+        "telegramBotToken": "",
         "telegramChatId": s.telegram_chat_id,
         "weights": {
             "news": int(round(s.weight_news * 100)),

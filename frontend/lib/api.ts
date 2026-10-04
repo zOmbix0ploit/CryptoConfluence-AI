@@ -1,3 +1,5 @@
+import { getUnlockedDefaultWebhook } from "@/lib/security";
+
 const BASE_PATH =
   typeof window !== "undefined" &&
   window.location.pathname.startsWith("/CryptoConfluence-AI")
@@ -185,15 +187,7 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
     return fetchLiveStaticJson("health.json");
   }
 
-  const defaultWebhook = [
-    "https://discord.com/api",
-    "webhooks",
-    "1476683033540038668",
-    [
-      "1Wqz21ZYqhaYu0qy5NEDjeoUwvIvkG6zAWA",
-      "xsPLq84kgEPn6jXjzfu8w1ng3SbmFcsea",
-    ].join(""),
-  ].join("/");
+  const defaultWebhook = getUnlockedDefaultWebhook();
 
   if (path.startsWith("/api/settings")) {
     const defaults = {
@@ -341,7 +335,7 @@ export async function apiPost<T>(path: string, body?: any): Promise<T> {
   }
 
   const cloudUrl = await getCloudBackendUrl();
-  if (cloudUrl && path !== "/api/settings/test" && path !== "/api/signals/discord-pnl-report") {
+  if (cloudUrl) {
     try {
       const response = await fetch(`${cloudUrl}${path}`, {
         method: "POST",
@@ -383,15 +377,7 @@ export async function apiPost<T>(path: string, body?: any): Promise<T> {
     path === "/api/settings/test" ||
     path === "/api/signals/discord-pnl-report"
   ) {
-    const defaultWebhook = [
-      "https://discord.com/api",
-      "webhooks",
-      "1476683033540038668",
-      [
-        "1Wqz21ZYqhaYu0qy5NEDjeoUwvIvkG6zAWA",
-        "xsPLq84kgEPn6jXjzfu8w1ng3SbmFcsea",
-      ].join(""),
-    ].join("/");
+    const defaultWebhook = getUnlockedDefaultWebhook();
     const saved =
       typeof window !== "undefined"
         ? JSON.parse(localStorage.getItem("cryptoconfluence_settings") || "{}")
@@ -405,7 +391,7 @@ export async function apiPost<T>(path: string, body?: any): Promise<T> {
     ).trim();
     if (!webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
       throw new Error(
-        "Please enter a valid Discord Webhook URL starting with https://discord.com/api/webhooks/..."
+        "Please unlock Settings or enter a valid Discord Webhook URL starting with https://discord.com/api/webhooks/..."
       );
     }
     const sigData = await fetchStaticWithLiveBinance("/api/signals");

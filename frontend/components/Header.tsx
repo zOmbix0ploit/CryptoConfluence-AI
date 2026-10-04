@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
+import { CoinIcon } from "@/components/CoinIcon";
 import { LOGO_DATA_URI } from "@/lib/logo";
 import { formatPct, formatPrice } from "@/lib/utils";
 import type { Benchmark, WsStatus } from "@/types";
@@ -223,12 +224,19 @@ function TickerChip({
         compact ? "px-2.5 py-1.5 justify-between" : "px-3.5 py-1.5 gap-3"
       } flex items-center`}
     >
-      <div className="min-w-0">
-        <div className="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 font-semibold tracking-wider">
-          {label}
-        </div>
-        <div className="font-mono text-xs sm:text-sm font-extrabold text-slate-900 truncate">
-          ${formatPrice(data.price)}
+      <div className="flex items-center gap-2 min-w-0">
+        <CoinIcon
+          symbol={label}
+          size={compact ? 18 : 22}
+          className="ring-1 ring-slate-200/80"
+        />
+        <div className="min-w-0">
+          <div className="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 font-semibold tracking-wider">
+            {label}
+          </div>
+          <div className="font-mono text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+            ${formatPrice(data.price)}
+          </div>
         </div>
       </div>
       <span

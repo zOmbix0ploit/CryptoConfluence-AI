@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import type { BubblePoint } from "@/types";
 import { formatPct, formatPrice, formatVolume } from "@/lib/utils";
 import { Search, Info } from "lucide-react";
+import { CoinIcon } from "@/components/CoinIcon";
 
 interface CryptoBubblesProps {
   bubbles: BubblePoint[];
@@ -53,8 +54,8 @@ export function CryptoBubbles({
 
   // Helper to scale volume logarithmically to bubble diameter (in px)
   const getBubbleSize = (vol: number) => {
-    const minSize = 48;
-    const maxSize = 96;
+    const minSize = 60;
+    const maxSize = 104;
     if (maxVol <= minVol) return (minSize + maxSize) / 2;
     const logMin = Math.log(minVol);
     const logMax = Math.log(maxVol);
@@ -143,6 +144,8 @@ export function CryptoBubbles({
                 ? "0 6px 16px -4px rgba(16, 185, 129, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.95)"
                 : "0 6px 16px -4px rgba(244, 63, 94, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.95)";
 
+              const iconSize = Math.max(16, Math.min(28, Math.round(size * 0.29)));
+
               return (
                 <div
                   key={bubble.symbol}
@@ -160,15 +163,20 @@ export function CryptoBubbles({
                     isSelected ? "ring-2 ring-indigo-500/70" : ""
                   }`}
                 >
+                  <CoinIcon
+                    symbol={bubble.symbol}
+                    size={iconSize}
+                    className="mb-0.5 ring-1 ring-white/80 shadow-xs"
+                  />
                   <span
-                    className={`font-mono font-bold text-[11px] leading-tight truncate max-w-[85%] text-center ${
+                    className={`font-mono font-bold text-[10px] sm:text-[11px] leading-tight truncate max-w-[85%] text-center ${
                       isUp ? "text-emerald-950" : "text-rose-950"
                     }`}
                   >
                     {bubble.display_symbol.replace("/USDT", "")}
                   </span>
                   <span
-                    className={`font-mono text-[10px] font-semibold leading-tight mt-0.5 ${
+                    className={`font-mono text-[9px] sm:text-[10px] font-semibold leading-tight ${
                       isUp ? "text-emerald-700" : "text-rose-700"
                     }`}
                   >
@@ -182,11 +190,18 @@ export function CryptoBubbles({
 
         {/* Hover Floating Details Card */}
         {hoveredBubble && (
-          <div className="pointer-events-none absolute bottom-3 left-3 bg-white/90 border border-slate-200/90 rounded-2xl p-3.5 shadow-xl backdrop-blur-xl text-xs font-mono z-30 min-w-[215px]">
-            <div className="flex items-center justify-between gap-2 border-b border-slate-200/70 pb-1.5 mb-2">
-              <span className="font-bold text-slate-900 text-sm">
-                {hoveredBubble.display_symbol}
-              </span>
+          <div className="pointer-events-none absolute bottom-3 left-3 bg-white/95 border border-slate-200/90 rounded-2xl p-3.5 shadow-xl backdrop-blur-xl text-xs font-mono z-30 min-w-[225px]">
+            <div className="flex items-center justify-between gap-2.5 border-b border-slate-200/70 pb-2 mb-2">
+              <div className="flex items-center gap-2">
+                <CoinIcon
+                  symbol={hoveredBubble.symbol}
+                  size={22}
+                  className="ring-1 ring-slate-200"
+                />
+                <span className="font-bold text-slate-900 text-sm">
+                  {hoveredBubble.display_symbol}
+                </span>
+              </div>
               <span
                 className={`font-bold ${
                   hoveredBubble.change >= 0

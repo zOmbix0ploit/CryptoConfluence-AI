@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { GeneratedSignal } from "@/types";
 import { formatPrice, timeAgo } from "@/lib/utils";
+import { CoinIcon } from "@/components/CoinIcon";
 import {
   TrendingUp,
   TrendingDown,
@@ -107,6 +108,11 @@ Generated: ${new Date(signal.timestamp).toUTCString()}
       {/* Top Header: Coin, Type, Status */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
+          <CoinIcon
+            symbol={signal.symbol || signal.coin}
+            size={20}
+            className="ring-1 ring-slate-200/80"
+          />
           <span className="font-mono text-base font-bold text-slate-900">
             {signal.coin}
           </span>

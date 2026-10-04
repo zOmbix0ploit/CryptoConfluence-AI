@@ -159,14 +159,19 @@ class BinanceService:
 
     async def _run_ws(self, handler: TickerHandler) -> None:
         backoff = 1.0
-        url = self.settings.binance_ws_url.replace("/ws", "/stream?streams=!miniTicker@arr")
+        urls = [
+            self.settings.binance_ws_url.replace("/ws", "/stream?streams=!miniTicker@arr"),
+            "wss://data-stream.binance.vision/stream?streams=!miniTicker@arr",
+        ]
+        url_idx = 0
         while not self._stop.is_set():
+            url = urls[url_idx % len(urls)]
             try:
                 self.ws_status = "RECONNECTING"
                 async with websockets.connect(url, ping_interval=20, ping_timeout=20, close_timeout=5) as ws:
                     self.ws_status = "CONNECTED"
                     backoff = 1.0
-                    logger.info("binance_ws_connected")
+                    logger.info("binance_ws_connected", url=url)
                     async for raw in ws:
                         self.last_message_at = datetime.now(timezone.utc)
                         message = json.loads(raw)
@@ -177,7 +182,9 @@ class BinanceService:
                 raise
             except Exception as exc:  # noqa: BLE001 - reconnect loop must continue
                 self.ws_status = "RECONNECTING"
-                logger.error("binance_ws_error", error=str(exc), backoff=backoff)
+                url_idx += 1
+                logger.error("binance_ws_error", url=url, error=str(exc), backoff=backoff)
                 await asyncio.sleep(backoff)
-                backoff = min(backoff * 2, 30.0)
+                backoff = min(backoff * 2, 15.0)
         self.ws_status = "DISCONNECTED"
+
