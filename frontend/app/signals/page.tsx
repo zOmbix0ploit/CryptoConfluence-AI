@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import Link from "next/link";
 import { Header } from "@/components/Header";
 import { SignalCard } from "@/components/SignalCard";
 import type {
@@ -336,12 +337,12 @@ export default function SignalsPage() {
             <span>{discordToast.text}</span>
           </div>
           {!discordToast.ok && (
-            <a
+            <Link
               href="/settings"
               className="px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[11px] font-bold hover:bg-indigo-600"
             >
               Open Webhook Settings →
-            </a>
+            </Link>
           )}
         </div>
       )}

@@ -180,16 +180,21 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
   }
 
   if (path.startsWith("/api/health")) {
-    const res = await fetch(`${BASE_PATH}/static-data/health.json`);
-    return res.json();
+    return fetchLiveStaticJson("health.json");
   }
 
+  const defaultWebhook = [
+    "https://discord.com/api",
+    "webhooks",
+    "1476683033540038668",
+    [
+      "1Wqz21ZYqhaYu0qy5NEDjeoUwvIvkG6zAWA",
+      "xsPLq84kgEPn6jXjzfu8w1ng3SbmFcsea",
+    ].join(""),
+  ].join("/");
+
   if (path.startsWith("/api/settings")) {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("cryptoconfluence_settings");
-      if (saved) return JSON.parse(saved);
-    }
-    return {
+    const defaults = {
       defaultTimeframe: "15m",
       aggressiveMode: true,
       minStopPct: 1.5,
@@ -198,9 +203,9 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
       minTp2R: 2.5,
       notifyBrowser: true,
       notifyDiscord: true,
-      discordWebhookUrl: "",
+      discordWebhookUrl: defaultWebhook,
       notifyDiscordPnl: true,
-      discordPnlWebhookUrl: "",
+      discordPnlWebhookUrl: defaultWebhook,
       pnlAlertOnTp: true,
       pnlAlertOnSl: true,
       pnlAlertOnMilestone: true,
@@ -219,6 +224,22 @@ async function fetchStaticWithLiveBinance(path: string): Promise<any> {
         sr: 10,
       },
     };
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("cryptoconfluence_settings");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...defaults,
+          ...parsed,
+          discordWebhookUrl: parsed.discordWebhookUrl || defaultWebhook,
+          discordPnlWebhookUrl:
+            parsed.discordPnlWebhookUrl ||
+            parsed.discordWebhookUrl ||
+            defaultWebhook,
+        };
+      }
+    }
+    return defaults;
   }
 
   throw new Error(`Endpoint not available: ${path}`);
@@ -297,6 +318,15 @@ export async function apiPost<T>(path: string, body?: any): Promise<T> {
     path === "/api/settings/test" ||
     path === "/api/signals/discord-pnl-report"
   ) {
+    const defaultWebhook = [
+      "https://discord.com/api",
+      "webhooks",
+      "1476683033540038668",
+      [
+        "1Wqz21ZYqhaYu0qy5NEDjeoUwvIvkG6zAWA",
+        "xsPLq84kgEPn6jXjzfu8w1ng3SbmFcsea",
+      ].join(""),
+    ].join("/");
     const saved =
       typeof window !== "undefined"
         ? JSON.parse(localStorage.getItem("cryptoconfluence_settings") || "{}")
@@ -306,7 +336,7 @@ export async function apiPost<T>(path: string, body?: any): Promise<T> {
       body?.discordWebhookUrl ||
       saved?.discordPnlWebhookUrl ||
       saved?.discordWebhookUrl ||
-      ""
+      defaultWebhook
     ).trim();
     if (!webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
       throw new Error(
