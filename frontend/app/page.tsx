@@ -17,6 +17,7 @@ import type {
   MarketRow,
 } from "@/types";
 import { apiGet, apiPost } from "@/lib/api";
+import { LOGO_DATA_URI } from "@/lib/logo";
 import {
   Radio,
   SlidersHorizontal,
@@ -239,7 +240,7 @@ export default function TerminalDashboard() {
                     const s = data.signal;
                     new Notification(`SIGNALIX · ${s.type} ${s.coin || s.symbol}`, {
                       body: `Entry: $${s.entry} | SL: $${s.sl} | TP1: $${s.tp1} | Score: ${s.confidence_score}/100`,
-                      icon: "/logo.png",
+                      icon: LOGO_DATA_URI,
                     });
                   }
                 } catch {

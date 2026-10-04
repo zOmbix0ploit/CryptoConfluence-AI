@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import type { OverviewResponse, HealthResponse, WsStatus } from "@/types";
 import { apiGet, apiPost } from "@/lib/api";
+import { LOGO_DATA_URI } from "@/lib/logo";
 import {
   Sliders,
   Shield,
@@ -291,7 +292,7 @@ export default function SettingsPage() {
       if (perm === "granted") {
         new Notification("CryptoConfluence AI — Live Signal Alert", {
           body: "🟢 LONG BTC/USDT (15m) • Confidence: 84/100 • Desktop notifications are working!",
-          icon: "/logo.png",
+          icon: LOGO_DATA_URI,
         });
         setNotifyBrowser(true);
         setBrowserStatus({

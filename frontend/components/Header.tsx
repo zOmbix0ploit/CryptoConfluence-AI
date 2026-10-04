@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
+import { LOGO_DATA_URI } from "@/lib/logo";
 import { formatPct, formatPrice } from "@/lib/utils";
 import type { Benchmark, WsStatus } from "@/types";
 import { LayoutDashboard, Radio, Newspaper, Sliders } from "lucide-react";
@@ -41,12 +42,7 @@ export function Header({
           <div className="relative flex items-center justify-center">
             <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-slate-900 via-indigo-950 to-slate-800 shadow-lg shadow-slate-900/15 ring-2 ring-white transition-transform duration-200 group-hover:scale-105">
               <img
-                src={`${
-                  typeof window !== "undefined" &&
-                  window.location.pathname.startsWith("/CryptoConfluence-AI")
-                    ? "/CryptoConfluence-AI"
-                    : ""
-                }/logo.png`}
+                src={LOGO_DATA_URI}
                 alt="CryptoConfluence AI Logo"
                 width={42}
                 height={42}
