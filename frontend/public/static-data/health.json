@@ -1,1 +1,14 @@
-{"status":"ok","utc_now":"2026-11-07T02:32:23.190034+00:00","binance_ws":"CONNECTED","supabase_configured":true,"llm_configured":false,"news_configured":true,"last_market_update":"2026-11-07T02:32:23.056004+00:00","details":{"last_error":null,"news_error":null,"symbols":128}}
+{
+  "status": "ok",
+  "utc_now": "2026-11-07T02:38:52.649195+00:00",
+  "binance_ws": "CONNECTED",
+  "supabase_configured": true,
+  "llm_configured": false,
+  "news_configured": true,
+  "last_market_update": "2026-11-07T02:38:52.056310+00:00",
+  "details": {
+    "last_error": null,
+    "news_error": null,
+    "symbols": 120
+  }
+}
