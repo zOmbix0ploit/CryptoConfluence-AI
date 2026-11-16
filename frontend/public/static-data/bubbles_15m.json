@@ -1,1 +1,438 @@
-{"timeframe":"15m","bubbles":[{"symbol":"BTCUSDT","display_symbol":"BTC/USDT","price":65156.0,"change":0.32065042622800866,"volume":1502866547.1603224,"volume_ratio":2.158546946448472,"momentum_score":37.0},{"symbol":"ETHUSDT","display_symbol":"ETH/USDT","price":1823.83,"change":-0.2808743169398962,"volume":637070602.341266,"volume_ratio":1.6463748175381023,"momentum_score":31.0},{"symbol":"SOLUSDT","display_symbol":"SOL/USDT","price":72.22,"change":-0.4684486084320797,"volume":277632597.0143,"volume_ratio":3.018223194513133,"momentum_score":51.2},{"symbol":"ZECUSDT","display_symbol":"ZEC/USDT","price":896.73,"change":0.615829855969849,"volume":138016634.80307,"volume_ratio":4.09901524906282,"momentum_score":77.6},{"symbol":"XRPUSDT","display_symbol":"XRP/USDT","price":0.9656,"change":-0.41228612657184127,"volume":123484725.44927,"volume_ratio":1.6357793679567796,"momentum_score":23.3},{"symbol":"BNBUSDT","display_symbol":"BNB/USDT","price":594.98,"change":-0.15079165619502005,"volume":68331787.8548,"volume_ratio":1.3958925283389292,"momentum_score":20.9},{"symbol":"NEARUSDT","display_symbol":"NEAR/USDT","price":3.192,"change":0.7578149668455959,"volume":51876680.9727,"volume_ratio":1.9786409425631182,"momentum_score":70.0},{"symbol":"ASTERUSDT","display_symbol":"ASTER/USDT","price":0.5389,"change":3.096330275229356,"volume":54345655.427915,"volume_ratio":0.5140161254023486,"momentum_score":73.6},{"symbol":"DOGEUSDT","display_symbol":"DOGE/USDT","price":0.05934,"change":0.33818058843422183,"volume":44917454.44428,"volume_ratio":0.665047628369632,"momentum_score":19.4},{"symbol":"PEPEUSDT","display_symbol":"PEPE/USDT","price":3.84e-06,"change":-1.0309278350515583,"volume":36664991.54643435,"volume_ratio":1.3927961939692894,"momentum_score":26.5},{"symbol":"UNIUSDT","display_symbol":"UNI/USDT","price":5.203,"change":0.8914728682170593,"volume":34907555.7243,"volume_ratio":2.2790738084033904,"momentum_score":77.1},{"symbol":"HYPEUSDT","display_symbol":"HYPE/USDT","price":66.55,"change":-0.2692192641340003,"volume":33889682.05803,"volume_ratio":1.943606341008282,"momentum_score":31.6},{"symbol":"NVDABUSDT","display_symbol":"NVDAB/USDT","price":163.33,"change":-0.2504887585532726,"volume":38012931.29775,"volume_ratio":1.9853301109005677,"momentum_score":91.1},{"symbol":"RWUSDUSDT","display_symbol":"RWUSD/USDT","price":0.9996,"change":0.0,"volume":29238834.1737,"volume_ratio":1.7844501910063508,"momentum_score":15.0},{"symbol":"SOXLBUSDT","display_symbol":"SOXLB/USDT","price":55.23,"change":-1.1461318051575942,"volume":27762433.84144,"volume_ratio":0.5457006570345437,"momentum_score":100.0},{"symbol":"SUIUSDT","display_symbol":"SUI/USDT","price":0.7301,"change":0.38498556304138937,"volume":24088185.68108,"volume_ratio":1.4998222897061522,"momentum_score":36.5},{"symbol":"TRXUSDT","display_symbol":"TRX/USDT","price":0.3038,"change":0.032916392363393346,"volume":23386980.0553,"volume_ratio":0.9913561316427025,"momentum_score":15.0},{"symbol":"ENAUSDT","display_symbol":"ENA/USDT","price":0.1196,"change":0.5887300252312804,"volume":23583081.879771,"volume_ratio":1.5913003084834858,"momentum_score":47.4},{"symbol":"ADAUSDT","display_symbol":"ADA/USDT","price":0.1543,"change":0.5215123859191624,"volume":19892798.38157,"volume_ratio":1.8732378429348004,"momentum_score":54.7},{"symbol":"LINKUSDT","display_symbol":"LINK/USDT","price":9.239,"change":-0.29104236283280427,"volume":18882290.31059,"volume_ratio":1.9962481022672787,"momentum_score":43.6},{"symbol":"XAUTUSDT","display_symbol":"XAUT/USDT","price":3859.59,"change":-0.28926068069237315,"volume":20580205.034438,"volume_ratio":1.313979498755068,"momentum_score":15.0},{"symbol":"INITUSDT","display_symbol":"INIT/USDT","price":0.10823,"change":3.6625553149421,"volume":21279548.615798,"volume_ratio":4.717335981125823,"momentum_score":100.0},{"symbol":"SPCXBUSDT","display_symbol":"SPCXB/USDT","price":140.16,"change":-0.12822339364582336,"volume":21235032.41968,"volume_ratio":3.195210661096958,"momentum_score":33.5},{"symbol":"AVAXUSDT","display_symbol":"AVAX/USDT","price":7.24,"change":0.3743241369749083,"volume":16494651.43967,"volume_ratio":1.6235846349633967,"momentum_score":34.3},{"symbol":"LTCUSDT","display_symbol":"LTC/USDT","price":45.04,"change":-0.3318584070796586,"volume":15612712.39655,"volume_ratio":1.1670921277780342,"momentum_score":24.3},{"symbol":"MUBUSDT","display_symbol":"MUB/USDT","price":758.88,"change":-0.4529758544175053,"volume":16873080.21021,"volume_ratio":1.1000878945114212,"momentum_score":72.0},{"symbol":"INJUSDT","display_symbol":"INJ/USDT","price":6.885,"change":-0.47577854671280795,"volume":12494887.06783,"volume_ratio":1.2848960592796934,"momentum_score":26.1},{"symbol":"MSTRBUSDT","display_symbol":"MSTRB/USDT","price":104.09,"change":0.4051316677920341,"volume":12840898.97152,"volume_ratio":1.7188358929513934,"momentum_score":39.8},{"symbol":"AAVEUSDT","display_symbol":"AAVE/USDT","price":109.12,"change":-0.6269307650372503,"volume":13152379.90953,"volume_ratio":2.0171547252523148,"momentum_score":67.5},{"symbol":"SOPHUSDT","display_symbol":"SOPH/USDT","price":0.00102,"change":2.0000000000000053,"volume":12823312.62107,"volume_ratio":1.4211592270403295,"momentum_score":100.0},{"symbol":"TAOUSDT","display_symbol":"TAO/USDT","price":192.2,"change":-0.41429311237699795,"volume":12087804.72607,"volume_ratio":1.035375196768796,"momentum_score":21.9},{"symbol":"CRCLBUSDT","display_symbol":"CRCLB/USDT","price":58.67,"change":0.32484185330825394,"volume":10335287.012,"volume_ratio":1.2480861232597953,"momentum_score":20.2},{"symbol":"INTCBUSDT","display_symbol":"INTCB/USDT","price":58.13,"change":-0.35983550376970674,"volume":12972079.00686,"volume_ratio":1.5125590826060764,"momentum_score":72.1},{"symbol":"RAREUSDT","display_symbol":"RARE/USDT","price":0.01268,"change":-2.686108979278585,"volume":11888546.432732,"volume_ratio":0.4752578709476721,"momentum_score":100.0},{"symbol":"SHELLUSDT","display_symbol":"SHELL/USDT","price":0.02863,"change":2.5053686471009278,"volume":11083698.030094,"volume_ratio":0.988021009498155,"momentum_score":97.9},{"symbol":"WLDUSDT","display_symbol":"WLD/USDT","price":0.2672,"change":-0.3348214285714124,"volume":10524111.67971,"volume_ratio":1.3021135616483168,"momentum_score":35.6},{"symbol":"PAXGUSDT","display_symbol":"PAXG/USDT","price":3863.68,"change":-0.2609045724106996,"volume":9602217.27191,"volume_ratio":0.7180136741662495,"momentum_score":15.0},{"symbol":"PUMPUSDT","display_symbol":"PUMP/USDT","price":0.00293,"change":1.0689655172413868,"volume":8457684.698089,"volume_ratio":2.7793188982763586,"momentum_score":83.4},{"symbol":"KAVAUSDT","display_symbol":"KAVA/USDT","price":0.02908,"change":-1.737057220708447,"volume":8835276.933147,"volume_ratio":0.8925206405068149,"momentum_score":78.5},{"symbol":"GOOGLBUSDT","display_symbol":"GOOGLB/USDT","price":294.62,"change":-0.12539397431118193,"volume":9109934.92159,"volume_ratio":0.5881514177484253,"momentum_score":15.0},{"symbol":"SKHYBUSDT","display_symbol":"SKHYB/USDT","price":127.82,"change":-0.8997828110455961,"volume":9466119.56474,"volume_ratio":0.9340972307514,"momentum_score":57.1},{"symbol":"NIGHTUSDT","display_symbol":"NIGHT/USDT","price":0.0471,"change":-2.0183104452767346,"volume":8230721.8681,"volume_ratio":1.2564964231373807,"momentum_score":48.5},{"symbol":"QQQBUSDT","display_symbol":"QQQB/USDT","price":677.92,"change":-0.1472710671261524,"volume":7899942.62787,"volume_ratio":0.8473575786329647,"momentum_score":15.0},{"symbol":"PENGUUSDT","display_symbol":"PENGU/USDT","price":0.004944,"change":0.4877057508636398,"volume":7326009.353312,"volume_ratio":0.4807339399459347,"momentum_score":22.4},{"symbol":"KORUBUSDT","display_symbol":"KORUB/USDT","price":7.21,"change":-1.9047619047619004,"volume":8053449.2266,"volume_ratio":0.9608960132793286,"momentum_score":100.0},{"symbol":"ZROUSDT","display_symbol":"ZRO/USDT","price":1.385,"change":-0.5734767025089611,"volume":7008856.39634,"volume_ratio":1.3639795986033583,"momentum_score":43.5},{"symbol":"ONEUSDT","display_symbol":"ONE/USDT","price":0.001331,"change":-1.33630289532294,"volume":7486901.3285283,"volume_ratio":0.4824427325640575,"momentum_score":19.9},{"symbol":"TQQQBUSDT","display_symbol":"TQQQB/USDT","price":57.16,"change":-0.48755006094375963,"volume":7105575.134,"volume_ratio":2.0732290012208487,"momentum_score":100.0}],"updated_at":"2026-11-16T02:50:40.082428+00:00"}
+{
+  "timeframe": "15m",
+  "bubbles": [
+    {
+      "symbol": "BTCUSDT",
+      "display_symbol": "BTC/USDT",
+      "price": 65100.0,
+      "change": 0.21765129027545524,
+      "volume": 1495742753.1325943,
+      "volume_ratio": 2.158546946448472,
+      "momentum_score": 32.9
+    },
+    {
+      "symbol": "ETHUSDT",
+      "display_symbol": "ETH/USDT",
+      "price": 1823.02,
+      "change": -0.2808743169398962,
+      "volume": 634857591.315035,
+      "volume_ratio": 1.6463748175381023,
+      "momentum_score": 29.8
+    },
+    {
+      "symbol": "SOLUSDT",
+      "display_symbol": "SOL/USDT",
+      "price": 72.11,
+      "change": -0.4684486084320797,
+      "volume": 275656944.57323,
+      "volume_ratio": 3.018223194513133,
+      "momentum_score": 45.5
+    },
+    {
+      "symbol": "ZECUSDT",
+      "display_symbol": "ZEC/USDT",
+      "price": 897.76,
+      "change": 0.7291246017857944,
+      "volume": 136821277.97172,
+      "volume_ratio": 4.09901524906282,
+      "momentum_score": 77.6
+    },
+    {
+      "symbol": "XRPUSDT",
+      "display_symbol": "XRP/USDT",
+      "price": 0.965,
+      "change": -0.41228612657184127,
+      "volume": 122309241.427,
+      "volume_ratio": 1.6357793679567796,
+      "momentum_score": 22.4
+    },
+    {
+      "symbol": "BNBUSDT",
+      "display_symbol": "BNB/USDT",
+      "price": 594.56,
+      "change": -0.22485107811058505,
+      "volume": 67622470.40481,
+      "volume_ratio": 1.3958925283389292,
+      "momentum_score": 18.9
+    },
+    {
+      "symbol": "ASTERUSDT",
+      "display_symbol": "ASTER/USDT",
+      "price": 0.5395,
+      "change": 3.115443425076449,
+      "volume": 54437823.373104,
+      "volume_ratio": 0.5140161254023486,
+      "momentum_score": 73.9
+    },
+    {
+      "symbol": "NEARUSDT",
+      "display_symbol": "NEAR/USDT",
+      "price": 3.207,
+      "change": 1.2946005683612367,
+      "volume": 51483611.6645,
+      "volume_ratio": 1.9786409425631182,
+      "momentum_score": 89.8
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "display_symbol": "DOGE/USDT",
+      "price": 0.05937,
+      "change": 0.42272573554278026,
+      "volume": 44749881.70689,
+      "volume_ratio": 0.665047628369632,
+      "momentum_score": 20.7
+    },
+    {
+      "symbol": "NVDABUSDT",
+      "display_symbol": "NVDAB/USDT",
+      "price": 163.65,
+      "change": 0.4171523219434432,
+      "volume": 38194057.18433,
+      "volume_ratio": 1.9853301109005677,
+      "momentum_score": 91.1
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "display_symbol": "PEPE/USDT",
+      "price": 3.86e-06,
+      "change": -1.0309278350515583,
+      "volume": 36529412.05406212,
+      "volume_ratio": 1.3927961939692894,
+      "momentum_score": 26.5
+    },
+    {
+      "symbol": "UNIUSDT",
+      "display_symbol": "UNI/USDT",
+      "price": 5.205,
+      "change": 0.8720930232558125,
+      "volume": 34838210.39685,
+      "volume_ratio": 2.2790738084033904,
+      "momentum_score": 76.3
+    },
+    {
+      "symbol": "HYPEUSDT",
+      "display_symbol": "HYPE/USDT",
+      "price": 66.7,
+      "change": 0.31574199368515066,
+      "volume": 33740445.65814,
+      "volume_ratio": 1.943606341008282,
+      "momentum_score": 31.6
+    },
+    {
+      "symbol": "RWUSDUSDT",
+      "display_symbol": "RWUSD/USDT",
+      "price": 0.9999,
+      "change": 0.020006001800537958,
+      "volume": 29894283.3244,
+      "volume_ratio": 3.729746701191988,
+      "momentum_score": 15.0
+    },
+    {
+      "symbol": "SOXLBUSDT",
+      "display_symbol": "SOXLB/USDT",
+      "price": 55.62,
+      "change": 0.36062026685898974,
+      "volume": 28144325.79657,
+      "volume_ratio": 1.102224014863458,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "SUIUSDT",
+      "display_symbol": "SUI/USDT",
+      "price": 0.7315,
+      "change": 0.6049773133507591,
+      "volume": 23894322.82098,
+      "volume_ratio": 1.4998222897061522,
+      "momentum_score": 42.7
+    },
+    {
+      "symbol": "ENAUSDT",
+      "display_symbol": "ENA/USDT",
+      "price": 0.12,
+      "change": 0.9251471825062992,
+      "volume": 23473460.052801,
+      "volume_ratio": 1.5913003084834858,
+      "momentum_score": 57.4
+    },
+    {
+      "symbol": "TRXUSDT",
+      "display_symbol": "TRX/USDT",
+      "price": 0.3037,
+      "change": -0.06581112207962421,
+      "volume": 23067660.95968,
+      "volume_ratio": 0.9913561316427025,
+      "momentum_score": 15.0
+    },
+    {
+      "symbol": "INITUSDT",
+      "display_symbol": "INIT/USDT",
+      "price": 0.10546,
+      "change": -4.314259763851049,
+      "volume": 21484876.319679,
+      "volume_ratio": 5.321965511500422,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "SPCXBUSDT",
+      "display_symbol": "SPCXB/USDT",
+      "price": 140.32,
+      "change": 0.14987153868113615,
+      "volume": 21385364.92176,
+      "volume_ratio": 3.195210661096958,
+      "momentum_score": 34.4
+    },
+    {
+      "symbol": "XAUTUSDT",
+      "display_symbol": "XAUT/USDT",
+      "price": 3859.32,
+      "change": -0.32593480270871683,
+      "volume": 20575587.141476,
+      "volume_ratio": 1.313979498755068,
+      "momentum_score": 15.0
+    },
+    {
+      "symbol": "ADAUSDT",
+      "display_symbol": "ADA/USDT",
+      "price": 0.1544,
+      "change": 0.717079530638846,
+      "volume": 19736941.90525,
+      "volume_ratio": 1.8732378429348004,
+      "momentum_score": 61.5
+    },
+    {
+      "symbol": "LINKUSDT",
+      "display_symbol": "LINK/USDT",
+      "price": 9.239,
+      "change": -0.29104236283280427,
+      "volume": 18769625.5723,
+      "volume_ratio": 1.9962481022672787,
+      "momentum_score": 44.8
+    },
+    {
+      "symbol": "MUBUSDT",
+      "display_symbol": "MUB/USDT",
+      "price": 759.54,
+      "change": -0.25734280424878697,
+      "volume": 16978369.30509,
+      "volume_ratio": 1.1000878945114212,
+      "momentum_score": 72.0
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "display_symbol": "AVAX/USDT",
+      "price": 7.249,
+      "change": 0.5129627062248706,
+      "volume": 16324731.75452,
+      "volume_ratio": 1.6235846349633967,
+      "momentum_score": 38.5
+    },
+    {
+      "symbol": "LTCUSDT",
+      "display_symbol": "LTC/USDT",
+      "price": 45.12,
+      "change": 0.3780297976428768,
+      "volume": 15542771.74042,
+      "volume_ratio": 1.1670921277780342,
+      "momentum_score": 24.3
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "display_symbol": "AAVE/USDT",
+      "price": 109.33,
+      "change": -0.6269307650372503,
+      "volume": 13066909.09628,
+      "volume_ratio": 2.0171547252523148,
+      "momentum_score": 71.2
+    },
+    {
+      "symbol": "INTCBUSDT",
+      "display_symbol": "INTCB/USDT",
+      "price": 58.32,
+      "change": 0.27510316368638876,
+      "volume": 13023434.47726,
+      "volume_ratio": 1.5125590826060764,
+      "momentum_score": 72.1
+    },
+    {
+      "symbol": "MSTRBUSDT",
+      "display_symbol": "MSTRB/USDT",
+      "price": 104.01,
+      "change": 0.3279637310697438,
+      "volume": 12834122.06145,
+      "volume_ratio": 1.7188358929513934,
+      "momentum_score": 37.4
+    },
+    {
+      "symbol": "SOPHUSDT",
+      "display_symbol": "SOPH/USDT",
+      "price": 0.00102,
+      "change": 2.0000000000000053,
+      "volume": 12801538.20069,
+      "volume_ratio": 1.4211592270403295,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "INJUSDT",
+      "display_symbol": "INJ/USDT",
+      "price": 6.904,
+      "change": -0.47577854671280795,
+      "volume": 12348597.97786,
+      "volume_ratio": 1.2848960592796934,
+      "momentum_score": 35.2
+    },
+    {
+      "symbol": "TAOUSDT",
+      "display_symbol": "TAO/USDT",
+      "price": 192.4,
+      "change": -0.41429311237699795,
+      "volume": 12000233.3419,
+      "volume_ratio": 1.035375196768796,
+      "momentum_score": 24.1
+    },
+    {
+      "symbol": "RAREUSDT",
+      "display_symbol": "RARE/USDT",
+      "price": 0.01223,
+      "change": -6.062931696085962,
+      "volume": 11930112.990814,
+      "volume_ratio": 0.4752578709476721,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "SHELLUSDT",
+      "display_symbol": "SHELL/USDT",
+      "price": 0.02879,
+      "change": 3.0422333571939872,
+      "volume": 11075198.528282,
+      "volume_ratio": 0.988021009498155,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "WLDUSDT",
+      "display_symbol": "WLD/USDT",
+      "price": 0.2681,
+      "change": 0.5626406601650418,
+      "volume": 10503715.35386,
+      "volume_ratio": 1.3021135616483168,
+      "momentum_score": 42.9
+    },
+    {
+      "symbol": "CRCLBUSDT",
+      "display_symbol": "CRCLB/USDT",
+      "price": 58.65,
+      "change": 0.27355103436484285,
+      "volume": 10238976.3488,
+      "volume_ratio": 1.2480861232597953,
+      "momentum_score": 20.2
+    },
+    {
+      "symbol": "PAXGUSDT",
+      "display_symbol": "PAXG/USDT",
+      "price": 3864.96,
+      "change": -0.3158725980521251,
+      "volume": 9550376.789257,
+      "volume_ratio": 0.7180136741662495,
+      "momentum_score": 15.0
+    },
+    {
+      "symbol": "SKHYBUSDT",
+      "display_symbol": "SKHYB/USDT",
+      "price": 128.02,
+      "change": -0.6981073533974382,
+      "volume": 9533369.31083,
+      "volume_ratio": 0.9340972307514,
+      "momentum_score": 57.1
+    },
+    {
+      "symbol": "GOOGLBUSDT",
+      "display_symbol": "GOOGLB/USDT",
+      "price": 294.87,
+      "change": -0.05080956574758963,
+      "volume": 9273674.40144,
+      "volume_ratio": 1.3257114528669056,
+      "momentum_score": 23.8
+    },
+    {
+      "symbol": "KAVAUSDT",
+      "display_symbol": "KAVA/USDT",
+      "price": 0.0288,
+      "change": -1.737057220708447,
+      "volume": 8769250.752641,
+      "volume_ratio": 0.8925206405068149,
+      "momentum_score": 78.5
+    },
+    {
+      "symbol": "PUMPUSDT",
+      "display_symbol": "PUMP/USDT",
+      "price": 0.002932,
+      "change": 1.1724137931034544,
+      "volume": 8472091.342241,
+      "volume_ratio": 2.7793188982763586,
+      "momentum_score": 87.7
+    },
+    {
+      "symbol": "NIGHTUSDT",
+      "display_symbol": "NIGHT/USDT",
+      "price": 0.04714,
+      "change": -1.9350811485642951,
+      "volume": 8227769.20714,
+      "volume_ratio": 1.2564964231373807,
+      "momentum_score": 48.5
+    },
+    {
+      "symbol": "KORUBUSDT",
+      "display_symbol": "KORUB/USDT",
+      "price": 7.27,
+      "change": -1.0884353741496609,
+      "volume": 8127874.0752,
+      "volume_ratio": 0.9608960132793286,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "QQQBUSDT",
+      "display_symbol": "QQQB/USDT",
+      "price": 678.34,
+      "change": -0.060381137521717795,
+      "volume": 7983557.51713,
+      "volume_ratio": 1.0660300431956604,
+      "momentum_score": 18.0
+    },
+    {
+      "symbol": "ONEUSDT",
+      "display_symbol": "ONE/USDT",
+      "price": 0.001328,
+      "change": -1.33630289532294,
+      "volume": 7499148.3140415,
+      "volume_ratio": 0.4824427325640575,
+      "momentum_score": 19.7
+    },
+    {
+      "symbol": "PENGUUSDT",
+      "display_symbol": "PENGU/USDT",
+      "price": 0.004959,
+      "change": 0.8331639910587327,
+      "volume": 7312200.640927,
+      "volume_ratio": 0.4807339399459347,
+      "momentum_score": 27.6
+    },
+    {
+      "symbol": "TQQQBUSDT",
+      "display_symbol": "TQQQB/USDT",
+      "price": 57.23,
+      "change": -0.24377503047187982,
+      "volume": 7100121.2135,
+      "volume_ratio": 2.0732290012208487,
+      "momentum_score": 100.0
+    },
+    {
+      "symbol": "ZROUSDT",
+      "display_symbol": "ZRO/USDT",
+      "price": 1.388,
+      "change": -0.5734767025089611,
+      "volume": 6988057.97532,
+      "volume_ratio": 1.3639795986033583,
+      "momentum_score": 42.9
+    }
+  ],
+  "updated_at": "2026-11-16T02:56:51.357262+00:00"
+}
